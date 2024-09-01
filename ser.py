@@ -20,16 +20,17 @@ class Greeting(Resource):
 
 api.add_resource(Greeting, '/')
 
-def visit_site():
-    url = f"http://localhost:{os.environ.get('PORT', 10000)}"
+def run_python_command():
     try:
-        response = requests.get(url)
-        logger.info(f"Visited {url} - Status Code: {response.status_code}")
-    except requests.exceptions.RequestException as e:
-        logger.error(f"Failed to visit {url} - Error: {e}")
+        # تنفيذ الأمر python3 -m StringGen
+        logger.info("Executing Python command: python3 -m StringGen")
+        result = os.system("python3 -m StringGen")
+        logger.info(f"Command executed with result: {result}")
+    except Exception as e:
+        logger.error(f"Failed to execute Python command - Error: {e}")
 
-# جدولة المهمة لتعمل كل 3 دقائق
-schedule.every(3).minutes.do(visit_site)
+# جدولة المهمة لتعمل كل 5 ساعات
+schedule.every(5).hours.do(run_python_command)
 
 def run_flask_app():
     try:
